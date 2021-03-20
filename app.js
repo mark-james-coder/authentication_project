@@ -66,6 +66,9 @@ app.get("/", function(req, res) {
   res.render("home");
 })
 
+app.get("/auth/google",
+  passport.authenticate('google', { scope: ['profile'] }));
+
 app.get("/login", function(req, res) {
   res.render("login");
 })
@@ -92,7 +95,7 @@ app.post("/register", function(req, res) {
   User.register({username: req.body.username}, req.body.password, function(err, user){
     if (err){
       console.log((err));
-      res.redirect("/register ");
+      res.redirect("/register");
     } else {
       passport.authenticate("local")(req, res, function(){
         res.redirect("/secrets");
